@@ -1,0 +1,61 @@
+﻿@using CyberSecurityBG.Common
+@model CyberSecurityBG.Web.ViewModels.Forum.ForumViewModel
+@{
+    ViewData["Title"] = "Forum";
+}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="wrapper wrapper-content animated fadeInRight">
+
+                <div class="ibox-content m-b-sm border-bottom" style="background-color:#1b1b18">
+                    <div class="p-xs">
+                        <div class="pull-left m-r-md" style="margin-right:10px">
+                            <i class="fa fa-globe text-navy mid-icon"></i>
+                        </div>
+                        <h2>Добре Дошли в Нашия Форум</h2>
+                        <span>Чувстваите се свободни да публикувате.</span>
+                        <a type="button" class="btn btn-primary btn-lg button-bottom-right" asp-controller="Posts" asp-action="Create" >Add Thread</a>
+                    </div>
+                </div>
+
+                <div class="ibox-content forum-container" style="background-color:#1b1b18">
+
+                    <div class="forum-title">
+                        <div class="pull-right forum-desc">
+                            <samll>Total posts: @Model.TotalPosts<samll>
+                        </div>
+                        <h3>General subjects</h3>
+                    </div>
+
+                    @foreach (var topic in Model.Categories)
+                    {
+                        <div class="forum-item active">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="forum-icon">
+                                        <i class="fa fa-shield"></i>
+                                    </div>
+                                    <a href="@topic.Url" class="forum-item-title">@topic.Title</a>
+                                    <div class="forum-sub-title">@topic.Description</div>
+                                </div>
+                                <div class="col-md-1 forum-info">
+                                </div>
+                                <div class="col-md-1 forum-info">
+                                    <span class="views-number">
+                                        @topic.PostsCount
+                                    </span>
+                                    <div>
+                                        <small>Posts</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

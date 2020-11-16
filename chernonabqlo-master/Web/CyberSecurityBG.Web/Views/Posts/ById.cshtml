@@ -1,0 +1,127 @@
+﻿@model CyberSecurityBG.Web.ViewModels.Posts.PostViewModel
+@{
+    this.ViewData["Title"] = Model.Title;
+    void DisplayComments(int? parentId)
+    {
+        var comments = this.Model.Comments.Where(x => x.ParentId == parentId);
+        if (!comments.Any())
+        {
+            return;
+        }
+
+        @foreach (var comment in comments)
+        {
+            <div class="container-fluid mt-100">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card mb-4" style="background-color:#1b1b18">
+                            <div class="card-header">
+                                <div class="media flex-wrap w-100 align-items-center">
+                                    <img src="@comment.ProfilePicture" style="width: 45px;" class="d-block ui-w-40 rounded-circle" alt="">
+                                    <div class="media-body ml-3">
+                                        <small class="profile-usertitle-name">@comment.UserUserName</small>
+                                        <div class="text-muted small">
+                                            <time datetime="@comment.CreatedOn.ToString("O")"></time>
+                                        </div>
+                                    </div>
+                                    <div class="text-muted small ml-3">
+                                        @if (this.User.Identity.IsAuthenticated)
+                                        {
+                                            <div class="px-4 pt-3"> <button type="button" class="btn btn-secondary" onclick="showAddCommentForm(@comment.Id)"><i class="fa fa-plus"></i>&nbsp; Answer</button> </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <article>
+                                    @Html.Raw(comment.SanitizedContent)
+                                </article>
+                                @{ DisplayComments(comment.Id); }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+
+<i class="fa fa-thumbs-up"></i>
+<div class="container-fluid mt-100">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4" style="background-color:#1b1b18">
+                <div class="card-header">
+                    <div class="media flex-wrap w-100 align-items-center">
+                        <img src="@Model.ProfilePicture" style="width: 65px;" class="d-block ui-w-40 rounded-circle" alt="">
+                        <div class="media-body ml-3">
+                            <h4>@Model.Title</h4>
+                            <a class="profile-usertitle-name" href="javascript:void(0)" data-abc="true">@Model.UserUserName</a>
+                            <div class="text-muted small"><time datetime="@Model.CreatedOn.ToString("O")"></time></div>
+                        </div>
+                        <div class="text-muted small ml-3">
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <a type="button" class="btn btn-primary" style="background-color:red" asp-area="Administration" asp-controller="AdminPosts" asp-action="DeleteById" asp-route-id="@Model.Id" title="Admin">Delete</a>
+                                <a type="button" class="btn btn-primary" style="background-color:forestgreen" asp-area="Administration" asp-controller="AdminPosts" asp-action="GetEditById" asp-route-id="@Model.Id" title="Admin">Edit</a>
+                            }
+                            @*<a href="#" onClick="sendVote(@Model.Id, true)">UpVote</a>
+                                <div id="votesCount">@Model.VotesCount</div>
+                                <a href="#" onClick="sendVote(@Model.Id, false)">DownVote</a>*@
+                            <div class="px-4 pt-3"> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @Html.Raw(Model.SanitizedContent)
+
+                    @{ DisplayComments(null); }
+                </div>
+                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                    <div class="px-4 pt-3">
+                        <a href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true">
+                            <i class="fa fa-heart text-danger"></i>&nbsp; <span class="align-middle">Views: @Model.Views</span>
+                        </a> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">Comments: @Model.Comments.Count()</span> </span>
+                    </div>
+                    <button style="margin-right:10px; margin-top:10px" type="button" class="btn btn-primary" onclick="showAddCommentForm(0)"><i class="ion ion-md-create"></i>&nbsp;Коментирай</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        document.getElementById('Content').onkeyup = function () {
+            document.getElementById('Content').innerHTML += "1"
+            if (this.value.length < 3 || this.value.length > 850) {
+                document.getElementById('submit').style.visibility = "hidden"
+            }
+            else {
+                document.getElementById('submit').style.visibility = "visible"
+            }
+        };
+
+
+        function showAddCommentForm(parentId) {
+            $("#AddCommentForm input[name='ParentId']").val(parentId);
+            $("#AddCommentForm").show();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#AddCommentForm").offset().top
+            }, 1000);
+        }
+    </script>
+}
+<div style="width:1090px; position:relative; left:10px; display:none" id="AddCommentForm">
+    <form method="post" asp-controller="Comments" asp-action="Create">
+        <input type="hidden" name="PostId" value="1003">
+        <input type="hidden" name="ParentId" value="0">
+        <div>
+            <label for="Content"></label>
+            <textarea style="height:250px" name="Content" id="Content" class="form-control"></textarea>
+            <input style="visibility:hidden; position: absolute; top: 84%; right: 0.5%;" type="submit" class="btn btn-primary" id="submit" value="Добави">
+            <span class="text-danger field-validation-valid" data-valmsg-for="Content" data-valmsg-replace="true"></span>
+        </div>
+    </form>
+</div>

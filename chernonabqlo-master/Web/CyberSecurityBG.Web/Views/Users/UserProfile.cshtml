@@ -1,0 +1,46 @@
+﻿@model CyberSecurityBG.Web.ViewModels.Users.UserProfileViewModel
+
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<!--
+User Profile Sidebar by keenthemes
+A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
+Licensed under MIT
+-->
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-3">
+            <div>
+                <!-- SIDEBAR USERPIC -->
+                <div class="profile-userpic">
+                    <img src="@Model.ImageUrl" style="position:relative; left:60px" class="img-responsive" alt="">
+                </div>
+                <!-- END SIDEBAR USERPIC -->
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+                        @Model.UserName
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div>
+                <form asp-controller="Users" asp-action="EditProfile">
+                    <input name="id" type="hidden" value="@this.Model.Id" />
+
+                    Username: <input name="username" class="form-control" style="width:160px; color:black" value="@this.Model.UserName">
+                    <span asp-validation-for="@this.Model.UserName" class="text-danger"></span>
+                    <br />
+                    Profile Picture: <input name="imageurl" class="form-control" value="@this.Model.ImageUrl" style="color:black" />
+                    <br />
+                    <input type="submit" class="btn btn-primary" value="Потвърди"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />

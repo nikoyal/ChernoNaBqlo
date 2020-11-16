@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-CyberSecurityBG-BBB373B5-EF3F-4DBB-B8AA-7152CEC275BF</UserSecretsId>
+	<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Categories\ByName - Copy.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlSanitizer" Version="5.0.304" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0-preview1.19506.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0-preview1.19506.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.435" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.0.96" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.2" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.164" PrivateAssets="all">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\CyberSecurityBG.Data.Models\CyberSecurityBG.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\CyberSecurityBG.Data\CyberSecurityBG.Data.csproj" />
+    <ProjectReference Include="..\..\Services\CyberSecurityBG.Services.Data\CyberSecurityBG.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\CyberSecurityBG.Services.Mapping\CyberSecurityBG.Services.Mapping.csproj" />
+    <ProjectReference Include="..\..\Services\CyberSecurityBG.Services.Messaging\CyberSecurityBG.Services.Messaging.csproj" />
+    <ProjectReference Include="..\..\Services\CyberSecurityBG.Services\CyberSecurityBG.Services.csproj" />
+    <ProjectReference Include="..\CyberSecurityBG.Web.Infrastructure\CyberSecurityBG.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\CyberSecurityBG.Web.ViewModels\CyberSecurityBG.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Administration\Views\AdminUsers\" />
+  </ItemGroup>
+</Project>

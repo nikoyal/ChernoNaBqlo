@@ -1,0 +1,51 @@
+﻿@model CyberSecurityBG.Web.ViewModels.Users.AllUsersViewModel
+
+@foreach (var user in Model.Users)
+{
+    <div class="container">
+        <div class="well span8 offset2">
+            <div class="row-fluid user-row">
+                <div class="span1">
+                    <img class="img-circle"
+                         src="@user.ImageUrl"
+                         alt="User Pic">
+                </div>
+                <div class="span10">
+                    <strong>@user.UserName</strong><br>
+                    <span class="text-muted">@user.CreatedOn</span>
+                </div>
+                <div class="span1 dropdown-user" data-for=".cyruxx">
+                    <i class="icon-chevron-down text-muted"></i>
+                </div>
+            </div>
+            <div class="row-fluid user-infos cyruxx">
+                <div class="span10 offset1">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">User information</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row-fluid">
+                                <div class="span3">
+                                    <img class="img-circle"
+                                         src="@user.ImageUrl"
+                                         alt="User Pic">
+                                </div>
+                        </div>
+                        <div class="panel-footer">
+                            <span class="pull-right">
+                                <button class="btn btn-danger" type="button"
+                                        data-toggle="tooltip"
+                                        data-original-title="Remove this user">
+                                    <i class="icon-remove icon-white"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>   
+
+}

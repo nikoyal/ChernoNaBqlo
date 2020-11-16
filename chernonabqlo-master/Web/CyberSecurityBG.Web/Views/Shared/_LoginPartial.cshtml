@@ -1,0 +1,42 @@
+﻿@using CyberSecurityBG.Common
+@using CyberSecurityBG.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+    <ul class="navbar-nav stroke">
+        @if (this.SignInManager.IsSignedIn(this.User))
+        {
+            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                @*<li class="nav-item">
+                    <a class="nav-link" style="color:seashell" border-radius:10%" asp-controller="AdminPosts" asp-action="GetAllUsers" asp-area="Administration">Потребители</a>
+                </li>*@
+                <li class="nav-item">
+                    <a class="nav-link" style="color:seashell" border-radius:10%" asp-controller="AdminNews" asp-action="Create" asp-area="Administration">Добави Новина</a>
+                </li>
+            }
+
+            @*<li class="nav-item">
+                <a class="nav-link" style="color:seashell" asp-area="" asp-controller="Forum" asp-action="Topics">Форум</a>
+            </li>*@
+             
+            <li class="nav-item">
+                <a class="nav-link" style="color:seashell" asp-controller="Users" asp-action="UserProfile" title="Manage">@(this.User.Identity.Name)</a>
+            </li>
+
+            <li class="nav-item">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Изход</button>
+                </form>
+            </li>
+        }
+        else
+        {
+            @*<li class="nav-item">
+                <a class="nav-link" style="color:seashell" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="color:seashell" asp-area="Identity" asp-page="/Account/Login">Вход</a>
+            </li>*@
+        }
+    </ul>
