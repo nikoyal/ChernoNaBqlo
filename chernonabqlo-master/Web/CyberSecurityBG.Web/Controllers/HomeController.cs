@@ -1,6 +1,7 @@
 ﻿namespace CyberSecurityBG.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Text.RegularExpressions;
     using CyberSecurityBG.Services.Data;
     using CyberSecurityBG.Web.ViewModels;
     using CyberSecurityBG.Web.ViewModels.Newss;
@@ -18,11 +19,7 @@
 
         public IActionResult Index()
         {
-            var viewModel = new NewsPageViewModel();
-            var news = this.newsService.GetAll<NewsViewModel>("politics");
-
-            viewModel.News = news;
-            return this.View(viewModel);
+            return this.RedirectToAction("All", "News", new {category = "Всички"});
         }
 
         public IActionResult Privacy()

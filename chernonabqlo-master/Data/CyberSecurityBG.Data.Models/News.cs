@@ -21,6 +21,10 @@
 
         public int Views { get; set; }
 
+        public string Source { get; set; }
+
+        public bool CreatedByAdmin { get; set; }
+
         public virtual ICollection<NewsComment> NewsComments { get; set; }
     }
 }

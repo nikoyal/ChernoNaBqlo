@@ -19,8 +19,12 @@
 
         public string PictureUrl { get; set; }
 
+        public string Source { get; set; }
+
 
         public IEnumerable<NewsCommentViewModel> NewsComments { get; set; }
+
+        public IEnumerable<TopNewsViewModel> TopNews { get; set; }
 
         public string ShortContent
         {

@@ -51,50 +51,94 @@
                 <div class="ibox-content forum-container" style="background-color:#1b1b18">
                     <div class="forum-title">
                         <div>
-                            <center>
-                                <h1>@Model.Title</h1>
-                                <div style="display: inline-flex;">
-                                    <img src="https://www.pngitem.com/pimgs/m/10-102407_date-and-time-clock-comments-free-date-icon.png" style="filter: invert(100%) sepia(0%) saturate(2%) hue-rotate(337deg) brightness(106%) contrast(101%); color:white; margin-left:10px; margin-right:10px;" height="25" width="25" />
-                                    <span class="text-secondary">@Model.CreatedOnAsString</span>
-                                    <img src="https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png" style="filter: invert(100%) sepia(0%) saturate(2%) hue-rotate(337deg) brightness(106%) contrast(101%); margin-left:10px; margin-right:10px;" height="25" width="25" />
-                                    <span class="text-secondary">@Model.Views</span>
-                                    @*<img src="https://image.flaticon.com/icons/png/512/25/25360.png" style="filter: invert(100%) sepia(0%) saturate(2%) hue-rotate(337deg) brightness(106%) contrast(101%); margin-left:10px; margin-right:10px;" height="25" width="25" />
-                                        <span class="text-secondary">@Model.NewsComments.Count()</span>*@
+                            <div style="float:right; width:350px; height:inherit; margin-left: 20px;">
+                                <script type="text/javascript">
+                                    w = 140; h = 350; s = 3; c = 10; l = 100727011;
+                                </script>
+                                <script type="text/javascript" src="https://m.netinfo.bg/sinoptik/js/show_widget.js"></script>
+                                <div style="float:right;">
+                                    <script type="text/javascript">
+                                        w = 140; h = 350; s = 3; c = 10; l = 100726050;
+                                    </script>
+                                    <script type="text/javascript" src="https://m.netinfo.bg/sinoptik/js/show_widget.js"></script>
                                 </div>
-
-                            </center>
-                            <center>
-                                <img src="@Model.PictureUrl"/>
-                            </center>
-                            <div>
-                                @Html.Raw(Model.Content)
-                            </div>
-                            <div class="px-4 pt-3" align="right">
-                                @if (this.SignInManager.IsSignedIn(this.User))
-                                {
-                                    if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                                <div class="g-mb-20">
+                                    <div class="u-heading-v2-3--bottom g-brd-primary g-mb-10">
+                                        <center>
+                                            <h3 class="h4 g-color-black mb-0">Водещи новини</h3>
+                                        </center>
+                                    </div>
+                                    @foreach (var news in Model.TopNews)
                                     {
-                                        <a type="button" class="btn btn-primary" style="background-color:red" asp-controller="AdminNews" asp-action="DeleteById" asp-area="Administration" asp-route-id="@Model.Id">Изтрий</a>
-                                        <a type="button" class="btn btn-primary" style="background-color:forestgreen" asp-controller="AdminNews" asp-action="GetEditById" asp-area="Administration" asp-route-id="@Model.Id">Редактирай</a>
+                                        <article class="media g-mb-10" style="margin-bottom:14px;">
+                                            <a class="d-flex mr-3" href="https://localhost:44319/News/ById/@news.Id" target="_blank">
+                                                <img style="width:75px;height:75px" src="@news.PictureUrl">
+                                            </a>
+                                            <div class="media-body">
+                                                <h3 class="h6" style="margin-bottom:0px">
+                                                    <a class="u-link-v5 g-color-black g-color-primary--hover" href="https://localhost:44319/News/ById/@news.Id" target="_blank">@news.Title</a>
+                                                </h3>
+                                                <div style="top:10px">
+                                                    <i class="far fa-calendar-alt" style="margin-left:7px; margin-right:7px; margin-top:5px;"></i>
+                                                    <span class="text-secondary">@news.CreatedOnAsString</span>
+                                                    <i class="fas fa-eye" style="margin-left:7px; margin-right:7px; margin-top:5px;"></i>
+                                                    <span class="text-secondary">@news.Views</span>
+                                                </div>
+                                            </div>
+                                        </article>
                                     }
-                                }
-                                @*<button type="button" class="btn btn-primary" onclick="showAddCommentForm(0)"><i class="ion ion-md-create"></i>&nbsp;Коментирай</button>*@
-                                <p style="color:red">fix share url when online</p>
-                                <div class="fb-share-button" data-href="https://localhost:44319/News/ById/ + @Model.Id" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flocalhost%3A44319%2FNews%2FById%2F1&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                                </div>
                             </div>
-                            <br />
-                            <div style="background-color:#fff;position:relative; right:0px; border-radius:30px;">
-                                <div class="fb-comments" data-colorscheme="light" data-href="https://localhost:44319/News/ById/ + @Model.Id" data-numposts="3" data-width="1000"></div>
-                            </div>
-
                         </div>
+                        <center>
+                            <h1>@Model.Title</h1>
+                            <center>
+                                <a href="https://www.mediapool.bg">https://www.mediapool.bg</a> // <a href="@Model.Source">Оригинал</a>
+                            </center>
+                            <div style="display: inline-flex;">
+                                @*<img src="https://www.pngitem.com/pimgs/m/10-102407_date-and-time-clock-comments-free-date-icon.png" style="filter: invert(100%) sepia(0%) saturate(2%) hue-rotate(337deg) brightness(106%) contrast(101%); color:white; margin-left:10px; margin-right:10px;" height="25" width="25" />*@
+                                <i class="far fa-calendar-alt" style="margin-left:7px; margin-right:7px; margin-top:5px;"></i>
+                                <span class="text-secondary">@Model.CreatedOnAsString</span>
+                                @*<img src="https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png" style="filter: invert(100%) sepia(0%) saturate(2%) hue-rotate(337deg) brightness(106%) contrast(101%); margin-left:10px; margin-right:10px;" height="25" width="25" />*@
+                                <i class="fas fa-eye" style="margin-left:7px; margin-right:7px; margin-top:5px;"></i>
+                                <span class="text-secondary">@Model.Views</span>
+                                @*<img src="https://image.flaticon.com/icons/png/512/25/25360.png" style="filter: invert(100%) sepia(0%) saturate(2%) hue-rotate(337deg) brightness(106%) contrast(101%); margin-left:10px; margin-right:10px;" height="25" width="25" />
+                <span class="text-secondary">@Model.NewsComments.Count()</span>*@
+                            </div>
 
+                        </center>
+                        <center>
+                            <img src="@Model.PictureUrl" />
+                        </center>
+                        <div style="width:650px">
+                            @Html.Raw(Model.Content)
+                        </div>
+                        <div class="px-4 pt-3" align="right">
+                            @if (this.SignInManager.IsSignedIn(this.User))
+                            {
+                                if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                                {
+                                    <a type="button" class="btn btn-primary" style="background-color:lightgrey; color:black" asp-controller="AdminNews" asp-action="DeleteById" asp-area="Administration" asp-route-id="@Model.Id">Delete</a>
+                                    <a type="button" class="btn btn-primary" style="background-color:lightgrey; color:black" asp-controller="AdminNews" asp-action="GetEditById" asp-area="Administration" asp-route-id="@Model.Id">Edit</a>
+                                }
+                            }
+                            @*<button type="button" class="btn btn-primary" onclick="showAddCommentForm(0)"><i class="ion ion-md-create"></i>&nbsp;Коментирай</button>*@
+                            <p style="color:red">fix share url when online</p>
+                        </div>
+                        <div style="max-width:115px; overflow:hidden; display:inline-block">
+                            <div class="fb-like" data-href="https://www.facebook.com/BqloNaCherno/" data-width="0" data-layout="button" data-action="like" data-size="large" data-share="true"></div>
+                        </div>
+                        <div class="fb-share-button" data-href="https://localhost:44319/News/ById/ + @Model.Id" data-layout="button" data-size="large" style="margin-left: 13px; top:-5px"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flocalhost%3A44319%2FNews%2FById%2F1&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"></a></div>
+                        <br />
+                        <div style="background-color:#fff; right:0px; border-radius:10px; width:1000px; display: inline-block;">
+                            <div class="fb-comments" data-colorscheme="light" data-href="https://localhost:44319/News/ById/ + @Model.Id" data-numposts="3" data-width="1000"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+
 </div>
 
 
@@ -136,3 +180,21 @@
             </div>
         </form>
     </div>*@
+
+
+
+
+@*@foreach (var news in Model.TopNews)
+    {
+        <article style="width:350px">
+            <a class="d-flex mr-3" href="fixme">
+                <img style="width:75px;height:75px" src="@news.PictureUrl" title="@news.Title" alt="----">
+            </a>
+            <h3 class="h6" style="width:230px">
+                <a class="u-link-v5 g-color-black g-color-primary--hover" href="fix">@news.Title</a>
+                <small>
+                    <time datetime="@news.CreatedOn"></time>
+                </small>
+            </h3>
+        </article>
+    }*@

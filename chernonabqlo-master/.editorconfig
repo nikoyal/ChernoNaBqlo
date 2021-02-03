@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# SA1405: Debug.Assert should provide message text
+dotnet_diagnostic.SA1405.severity = none

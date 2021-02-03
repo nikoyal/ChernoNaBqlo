@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Черно на бяло</title>
-
+    <script src="https://kit.fontawesome.com/3e83ba6270.js" crossorigin="anonymous"></script>
     <environment names="Development">
         <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
@@ -43,22 +43,25 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a style="color:seashell" class="nav-link" asp-area="" asp-controller="News" asp-action="All" asp-route-category="Politics">Политика</a>
+                            <a style="color:seashell" class="nav-link" asp-area="" asp-controller="News" asp-action="All" asp-route-category="България">България</a>
                         </li>
                         <li class="nav-item">
-                            <a style="color:seashell" class="nav-link" asp-area="" asp-controller="News" asp-action="All" asp-route-category="Conspiracy">Конспирации</a>
+                            <a style="color:seashell" class="nav-link" asp-area="" asp-controller="News" asp-action="All" asp-route-category="Европа">Европа</a>
                         </li>
                         <li class="nav-item">
-                            <a style="color:seashell" class="nav-link" asp-area="" asp-controller="News" asp-action="All" asp-route-category="Business">Бизнес</a>
+                            <a style="color:seashell" class="nav-link" asp-area="" asp-controller="News" asp-action="All" asp-route-category="Свят">Свят</a>
                         </li>
                         <li class="nav-item">
-                            <a style="color:seashell" class="nav-link" asp-area="" asp-controller="News" asp-action="All" asp-route-category="Technology">Технологии</a>
+                            <a style="color:seashell" class="nav-link" asp-area="" asp-controller="News" asp-action="All" asp-route-category="Бизнес">Бизнес</a>
                         </li>
                         <li class="nav-item">
-                            <a style="color:seashell" class="nav-link" asp-area="" asp-controller="News" asp-action="All" asp-route-category="Sport">Спорт</a>
+                            <a style="color:seashell" class="nav-link" asp-area="" asp-controller="News" asp-action="All" asp-route-category="Спорт">Спорт</a>
                         </li>
                         <li class="nav-item">
-                            <a style="color:seashell" class="nav-link" asp-area="" asp-controller="News" asp-action="All" asp-route-category="Other">Други</a>
+                            <a style="color:seashell" class="nav-link" asp-area="" asp-controller="News" asp-action="All" asp-route-category="Други">Други</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="color:red" class="nav-link" asp-area="" asp-controller="News" asp-action="All" asp-route-category="Коронавирус">Коронавирус</a>
                         </li>
                     </ul>
                 </div>

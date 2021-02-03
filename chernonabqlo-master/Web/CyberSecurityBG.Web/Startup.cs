@@ -1,7 +1,6 @@
 ﻿    namespace CyberSecurityBG.Web
 {
     using System.Reflection;
-
     using CyberSecurityBG.Data;
     using CyberSecurityBG.Data.Common;
     using CyberSecurityBG.Data.Common.Repositories;
@@ -30,7 +29,6 @@
         {
             this.configuration = configuration;
         }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -47,6 +45,7 @@
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
 
+            //services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -75,7 +74,6 @@
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
-
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
@@ -109,10 +107,12 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             app.UseEndpoints(
                 endpoints =>
                     {
                         endpoints.MapControllerRoute("forumCategory", "Forum/{name:minlength(3)}", new { controller = "Categories", action = "ByName" });
+                        endpoints.MapControllerRoute("newsCategory", "Новини/{category:minlength(3)}", new { controller = "News", action = "All" });
                         endpoints.MapControllerRoute("user", "User/UserProfile{name:minlength(3)}", new { controller = "Users", action = "UserProfile" });
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");

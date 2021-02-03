@@ -234,6 +234,9 @@ namespace CyberSecurityBG.Data.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("CreatedByAdmin")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -247,6 +250,9 @@ namespace CyberSecurityBG.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PictureUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Source")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")

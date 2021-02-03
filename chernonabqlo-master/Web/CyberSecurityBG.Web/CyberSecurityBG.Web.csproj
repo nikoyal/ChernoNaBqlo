@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-CyberSecurityBG-BBB373B5-EF3F-4DBB-B8AA-7152CEC275BF</UserSecretsId>
-	<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+	<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -16,13 +16,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Administration\Views\AdminUsers\**" />
+    <Content Remove="Areas\Administration\Views\AdminUsers\**" />
+    <EmbeddedResource Remove="Areas\Administration\Views\AdminUsers\**" />
+    <None Remove="Areas\Administration\Views\AdminUsers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Categories\ByName - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FontAwesome.MVC" Version="1.0.0" />
     <PackageReference Include="HtmlSanitizer" Version="5.0.304" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0-preview1.19506.2">
       <PrivateAssets>all</PrivateAssets>
@@ -34,6 +45,7 @@
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.0.96" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.2" />
+    <PackageReference Include="Mvc.RazorTools.FontAwesome" Version="5.0.3" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.164" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -51,6 +63,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Administration\Views\AdminUsers\" />
+    <Compile Update="Views\Shared\Index - Copy.cshtml.cs">
+      <DependentUpon>Index.cshtml.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

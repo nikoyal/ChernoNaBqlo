@@ -1,5 +1,6 @@
 ﻿namespace CyberSecurityBG.Web.Areas.Administration.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Text.RegularExpressions;
@@ -22,15 +23,16 @@
 
         private readonly IDeletableEntityRepository<News> newsRepository;
 
-        private readonly IDeletableEntityRepository<RSSChannel> rrsRepository;
+        private readonly IDeletableEntityRepository<RSSChannel> rssRepository;
 
         public AdminNewsController(
             INewsService newsService,
             IDeletableEntityRepository<News> newsRepository,
-            IDeletableEntityRepository<RSSChannel> rrsRepository)
+            IDeletableEntityRepository<RSSChannel> rssRepository)
         {
             this.newsService = newsService;
             this.newsRepository = newsRepository;
+            this.rssRepository = rssRepository;
         }
 
         public async Task<IActionResult> DeleteById(int id)
@@ -73,7 +75,7 @@
                 return this.View(input);
             }
 
-            var newsId = await this.newsService.CreateAsync(input.Title, input.Content, input.Url, input.Category);
+            var newsId = await this.newsService.CreateAsync(input.Title, input.Content, input.Url, input.Category, null, true, "");
 
             return this.RedirectToAction("ById", "News", new { id = newsId, area = string.Empty });
         }
@@ -86,39 +88,46 @@
             return this.RedirectToAction("All", "News", new { area = string.Empty });
         }
 
-        public IActionResult Rssfeed()
-        {
-            return this.View();
-        }
+        //public IActionResult Rssfeed()
+        //{
+        //    return this.View();
+        //}
 
         [HttpPost]
-        public IActionResult Rssfeed(string empty)
+        public IActionResult Rssfeed()
+        {
+            this.CreateRSSNewsWithCategory();
+            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+        }
+
+        public void CreateRSSNewsWithCategory()
         {
             WebClient wclient = new WebClient();
-            var rssurl = this.rrsRepository.All().Where(x => x.Id == 16).FirstOrDefault().URL;
-            string RSSData = wclient.DownloadString(rssurl);
-
-            XDocument xml = XDocument.Parse(RSSData);
-
+            var rssurls = this.rssRepository.All().Where(x => x.Id == 1016).FirstOrDefault();
+            string rssData = wclient.DownloadString(rssurls.URL);
+            XDocument xml = XDocument.Parse(rssData);
             var regex = new Regex("/\\d+/");
-            var RSSFeedData = from x in xml.Descendants("item")
-                              select new RSSFeed
-                              {
-                                  Title = (string)x.Element("title"),
-                                  Link = (string)x.Element("link"),
-                                  Description = (string)x.Element("description"),
-                                  PubDate = (string)x.Element("pubDate"),
-                                  PictureUrl = (string)x.Element("enclosure").Attribute("url"),
-                              };
-            foreach (var data in RSSFeedData)
-            {
-                this.newsService.CreateAsync(data.Title, data.Description, data.PictureUrl, "Other");
-                //    string PictureNumber = regex.Match(data.Link).ToString().TrimStart('/').TrimEnd('/');
-                //    string PictureUrl = "https://presscenters.com/images/news/" + PictureNumber.Substring(PictureNumber.Length - 2) + "/big_" + PictureNumber + ".png";
-            }
+            var rssFeedData = from x in xml.Descendants("item")
+                                  select new RSSFeed
+                                  {
+                                      Title = (string)x.Element("title"),
+                                      Source = (string)x.Element("link"),
+                                      Description = Regex.Replace((string)x.Element("description").Value, @"<.*>", string.Empty),
+                                      PubDate = (string)x.Element("pubDate"),
+                                      PictureUrl = Regex.Match((string)x.Element("description").Value, @"https\S+.jpg").ToString(),
+                                      Category = (string)x.Element("category"),
+                                  };
 
-            this.ViewBag.RSSFeed = RSSFeedData;
-            return this.View();
+            foreach (var data in rssFeedData)
+            {
+                if (data.Category != "Свят" && data.Category != "България" && data.Category != "Бизнес" && data.Category != "Коронавирус" && data.Category != "Европа")
+                {
+                    data.Category = "Други";
+                }
+
+                this.newsService.CreateAsync(data.Title, data.Description, data.PictureUrl, data.Category, data.PubDate, false, data.Source);
+                }
+
         }
 
     }
